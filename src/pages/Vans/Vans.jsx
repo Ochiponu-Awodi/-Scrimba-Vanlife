@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import createServer from "../../Server"
+import createServer from "../../../Server"
 import { useEffect, useState } from "react"
 import './Vans.css'
 import { Link } from "react-router-dom"

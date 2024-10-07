@@ -38,7 +38,8 @@
 }
 
 .van-type:hover {
-    color: #FFEAD0;
+    /* color: #FFEAD0; */
+    cursor: pointer;
 }
 
 .van-type:focus {
