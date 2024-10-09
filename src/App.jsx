@@ -14,6 +14,7 @@ import HostVanDetail from './pages/Host/HostVansDetail.jsx'
 import HostVanPricing from './pages/Host/HostVanPricing.jsx'
 import HostVanPhotos from './pages/Host/HostVanPhotos.jsx'
 import HostVanInfo from './pages/Host/HostVanInfo.jsx'
+import NotFound from './pages/Not Found.jsx'
 
 
 
@@ -40,9 +41,8 @@ function App() {
                   <Route path='pricing' element={<HostVanPricing />} />
                   <Route path='photos' element={<HostVanPhotos />} />
                 </Route>
-
               </Route>
-
+              <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
     </BrowserRouter>
