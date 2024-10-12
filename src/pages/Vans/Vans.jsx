@@ -2,35 +2,36 @@
 
 import createServer from "../../../Server"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import './Vans.css'
 
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useLoaderData, useSearchParams } from "react-router-dom"
+
+import getVans from "../api"
+
+export async function loader () {
+
+    return getVans ()
+
+}
 
 function Vans () {
 
-    const [searchParams, setSearchParams] = useSearchParams ()
+    const [ searchParams, setSearchParams ] = useSearchParams ()
 
-    const [vans, setVans] = useState ([])
+    const [ error, setError ] = useState ( null )
 
-    const typeFilter = searchParams.get('type')
+    const vans = useLoaderData ()
+
+    
+    const typeFilter = searchParams.get( 'type' )
 
     const displayedVans = typeFilter 
 
-        ? vans.filter(van => van.type === typeFilter) 
+        ? vans.filter( van => van.type === typeFilter ) 
 
         : vans
-
-    useEffect ( () => {
-
-        fetch( '/api/vans' )
-
-            .then( res => res.json() )
-
-            .then( data => setVans( data.vans ) )
-
-    }, [] )
 
     const vanElements = displayedVans.map( van => (
 
@@ -69,6 +70,12 @@ function Vans () {
         </div>
 
     ))
+
+    if ( error ) {
+
+        return <h1 aria-live="assertive" >There was an error: { error.message }</h1>
+
+    }
 
     return (
         <div 
