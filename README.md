@@ -8,4 +8,4 @@ Third Day we used searchParams hook to make filters, useLocation hook to return 
 
 Fourth day we switched from using the useEffect hook to load our page and used a loader function with the useLoaderData hook.
 
-Learning about more hooks like the useNavigate also redirect, also replacing react form with react router Form and it's action hook.
+Learning about more hooks like the useNavigate also redirect, also replacing react form with react router Form and it's action hook and setting up requireAuth component for protecting special routes.
