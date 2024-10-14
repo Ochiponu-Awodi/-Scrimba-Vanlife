@@ -1,12 +1,13 @@
-import { Link, useLocation, useLoaderData } from "react-router-dom"
-
+/* eslint-disable */
+import { Link, useLocation, useLoaderData, defer, Await } from "react-router-dom"
+import { Suspense } from "react"
 import './VanDetail.css'
 
 import { getVans } from "../../../api"
 
 export function loader ({ params }) {
 
-    return getVans( params.id )
+    return defer({vans: getVans( params.id )})
 
 }
 
@@ -14,23 +15,15 @@ function VanDetail () {
 
     const location = useLocation ()
 
-    const van = useLoaderData ()
+    const dataPromise = useLoaderData ()
 
     const search = location.state?.search || '';
     const type = location.state?.type || 'all';
 
-    return (
+    function renderVanEls (van) {
 
-        <div 
-            className="van-detail-container">
-
-            <Link
-                to = { `..${ search }` } relative = "path" className = "back-button" > &larr; <span> Back to { type } vans </span> 
-            </Link>
-            
-            <div 
-                className="van-detail">
-
+            return (
+                <>
                 <img 
                     src={van.imageUrl} />
 
@@ -53,7 +46,26 @@ function VanDetail () {
                     <button 
                         className="link-button"> Rent this van
                     </button>
+                    </>
+            )
+        }
 
+    return (
+
+        <div 
+            className="van-detail-container">
+
+            <Link
+                to = { `..${ search }` } relative = "path" className = "back-button" > &larr; <span> Back to { type } vans </span> 
+            </Link>
+            
+            <div 
+                className="van-detail">
+            <Suspense fallback={<h2>Loading...</h2>}>
+            <Await resolve={dataPromise.vans}>
+                {renderVanEls}
+            </Await>
+            </Suspense>
             </div>
         </div>
 
